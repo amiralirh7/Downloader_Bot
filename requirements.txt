@@ -1,0 +1,8 @@
+aiogram
+aiosqlite
+python-dotenv
+yt-dlp
+requests
+aiohttp
+pydantic
+loguru

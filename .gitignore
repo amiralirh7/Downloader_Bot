@@ -1,0 +1,25 @@
+# Virtual Environment
+venv/
+venv11/
+
+# Python Cache
+pycache/
+*.py[cod]
+
+# Downloads
+downloads/
+
+# Environment Variables
+.env
+
+# VS Code
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+storage/database/*.db
+*.db
+
+Downloader_Bot/ffmpeg/
