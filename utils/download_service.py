@@ -18,12 +18,18 @@ async def start_download(
     message: Message,
     url: str
 ):
+
+    print("START DOWNLOAD")
+
+
     file_path = None
 
     try:
         user = await get_user_by_telegram_id(
             message.from_user.id
-)
+    )
+
+        print(user)
 
         if not user:
             return
@@ -34,6 +40,8 @@ async def start_download(
             daily_count = await get_daily_download_count(
                 message.from_user.id
             )
+
+            print(daily_count)
 
             if daily_count >= DAILY_DOWNLOAD_LIMIT:
                 await message.answer(
