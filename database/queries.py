@@ -290,4 +290,72 @@ async def get_all_sponsors():
     return sponsors
 
 
+async def increase_daily_download(telegram_id: int):
+    db = await get_db()
+
+    await db.execute(
+        """
+        UPDATE users
+        SET daily_download_count = daily_download_count + 1
+        WHERE telegram_id = ?
+        """,
+        (telegram_id,)
+    )
+
+    await db.commit()
+    await db.close()
+
+
+async def increase_total_download(telegram_id: int):
+    db = await get_db()
+
+    await db.execute(
+        """
+        UPDATE users
+        SET total_download_count = total_download_count + 1
+        WHERE telegram_id = ?
+        """,
+        (telegram_id,)
+    )
+
+    await db.commit()
+    await db.close()
+
+
+async def get_daily_download_count(telegram_id: int):
+    db = await get_db()
+
+    cursor = await db.execute(
+        """
+        SELECT daily_download_count
+        FROM users
+        WHERE telegram_id = ?
+        """,
+        (telegram_id,)
+    )
+
+    result = await cursor.fetchone()
+
+    await db.close()
+
+    if result:
+        return result[0]
+
+    return 0
+
+
+async def reset_daily_downloads():
+    db = await get_db()
+
+    await db.execute(
+        """
+        UPDATE users
+        SET daily_download_count = 0
+        """
+    )
+
+    await db.commit()
+    await db.close()
+
+
  

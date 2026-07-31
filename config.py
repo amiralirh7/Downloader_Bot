@@ -12,6 +12,8 @@ OWNER_ID = int(os.getenv("OWNER_ID", 0))
 ADMIN_1_ID = int(os.getenv("ADMIN_1_ID", 0))
 ADMIN_2_ID = int(os.getenv("ADMIN_2_ID", 0))
 
+DAILY_DOWNLOAD_LIMIT = int(os.getenv("DAILY_DOWNLOAD_LIMIT", 20))
+
 
 DATABASE_NAME = "database.db"
 
