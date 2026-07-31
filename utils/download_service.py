@@ -4,9 +4,9 @@ from pathlib import Path
 
 from aiogram.types import Message, FSInputFile
 from config import DAILY_DOWNLOAD_LIMIT
+from database.queries import get_user_by_telegram_id
 
 from utils.instagram_downloader import download_instagram
-from services.user_service import get_user
 from database.queries import (
     get_daily_download_count,
     increase_daily_download,
@@ -21,7 +21,9 @@ async def start_download(
     file_path = None
 
     try:
-        user = await get_user(message.from_user.id)
+        user = await get_user_by_telegram_id(
+            message.from_user.id
+)
 
         if not user:
             return
