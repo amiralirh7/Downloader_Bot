@@ -5,7 +5,10 @@ from aiogram.fsm.context import FSMContext
 from utils.validators import is_instagram_url
 from bot.messages.user_messages import SEND_INSTAGRAM_LINK
 from bot.states.download_state import DownloadState
-from bot.handlers.force_join_handler import check_force_join, send_force_join
+from bot.handlers.force_join_handler import (
+    check_force_join,
+    send_force_join
+)
 from utils.download_service import start_download
 
 router = Router()
@@ -25,22 +28,22 @@ async def receive_link(
     if not is_instagram_url(message.text):
         return
 
-    await state.update_data(
-        download_link=message.text
-    )
-
-    await state.set_state(
-        DownloadState.waiting_for_join
-    )
-
     if not await check_force_join(
         message.bot,
         message.from_user.id
-):
+    ):
+        await state.update_data(
+            download_link=message.text
+        )
+
+        await state.set_state(
+            DownloadState.waiting_for_join
+        )
+
         await send_force_join(message)
         return
 
     await start_download(
         message,
         message.text
-)
+    )
