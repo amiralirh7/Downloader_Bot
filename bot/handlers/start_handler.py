@@ -3,17 +3,17 @@ from aiogram.types import Message
 from aiogram.filters import Command
 
 from services.user_service import register_user, is_user_banned
+from database.queries import get_user_by_telegram_id
+
 from bot.keyboards.main_menu import main_menu
 from bot.messages.user_messages import WELCOME_MESSAGE
 from bot.handlers.admin_handler import is_admin
-
 
 router = Router()
 
 
 @router.message(Command("start"))
 async def start_handler(message: Message):
-
     telegram_id = message.from_user.id
 
     if await is_user_banned(telegram_id):
@@ -27,6 +27,9 @@ async def start_handler(message: Message):
         username=message.from_user.username,
         first_name=message.from_user.first_name
     )
+
+    print("USER AFTER REGISTER:")
+    print(await get_user_by_telegram_id(telegram_id))
 
     await message.answer(
         WELCOME_MESSAGE,
