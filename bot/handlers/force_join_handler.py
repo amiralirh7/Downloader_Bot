@@ -68,6 +68,8 @@ async def check_join(
     await callback.message.delete()
 
     if link:
+        print("CALLBACK USER:", callback.from_user.id)
+        print("LINK:", link)
         await start_download(
             callback.message,
             link,

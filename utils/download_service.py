@@ -24,6 +24,7 @@ async def start_download(
     file_path = None
 
     try:
+        print("TELEGRAM ID:", telegram_id)
         user = await get_user_by_telegram_id(
             telegram_id
         )
