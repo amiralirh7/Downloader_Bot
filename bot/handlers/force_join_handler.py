@@ -70,7 +70,8 @@ async def check_join(
     if link:
         await start_download(
             callback.message,
-            link
+            link,
+            callback.from_user.id
         )
     else:
         await callback.message.answer(

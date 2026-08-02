@@ -3,11 +3,11 @@ import time
 from pathlib import Path
 
 from aiogram.types import Message, FSInputFile
-from config import DAILY_DOWNLOAD_LIMIT
-from database.queries import get_user_by_telegram_id
 
+from config import DAILY_DOWNLOAD_LIMIT
 from utils.instagram_downloader import download_instagram
 from database.queries import (
+    get_user_by_telegram_id,
     get_daily_download_count,
     increase_daily_download,
     increase_total_download
@@ -16,18 +16,17 @@ from database.queries import (
 
 async def start_download(
     message: Message,
-    url: str
+    url: str,
+    telegram_id: int
 ):
-
     print("START DOWNLOAD")
-
 
     file_path = None
 
     try:
         user = await get_user_by_telegram_id(
-            message.from_user.id
-    )
+            telegram_id
+        )
 
         print(user)
 
@@ -38,7 +37,7 @@ async def start_download(
 
         if not is_premium:
             daily_count = await get_daily_download_count(
-                message.from_user.id
+                telegram_id
             )
 
             print(daily_count)
@@ -71,11 +70,11 @@ async def start_download(
         )
 
         await increase_daily_download(
-            message.from_user.id
+            telegram_id
         )
 
         await increase_total_download(
-            message.from_user.id
+            telegram_id
         )
 
     finally:
