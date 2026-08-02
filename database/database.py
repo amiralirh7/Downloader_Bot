@@ -154,4 +154,10 @@ async def init_database():
         )
 
 
+        cursor = await db.execute(
+            "SELECT COUNT(*) FROM users"
+        )
+        count = await cursor.fetchone()
+        print("USERS IN DB:", count[0])
+
         await db.commit()
